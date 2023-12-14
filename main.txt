@@ -1,0 +1,22 @@
+import pygame
+import os
+pygame.init()
+screen = pygame.display.set_mode((500, 600))
+
+player =  pygame.image.load(os.path.join('img', '下載 (2).jpg')).convert()
+
+running = True
+
+while running:
+    for event in pygame.event.get():
+        screen.blit(player, (0,0))
+        if event.type == pygame.QUIT:
+            running = False
+
+screen.fill((255,255,255))
+pygame.display.update()
+
+
+
+
+pygame.quit
