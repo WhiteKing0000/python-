@@ -23,8 +23,7 @@ font = pygame.font.SysFont(None, 40)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('地球暖化塔防遊戲')
 
-#確保路徑正確
-os.chdir('/Users/Felix-SharleenHome/Desktop/python塔防遊戲')
+
 
 # 匯入圖片
 road_img = pygame.image.load(os.path.join('遊戲素材', 'road.png')).convert()
@@ -77,8 +76,9 @@ all_sprites.add(Player())
 all_sprites.add(background())
 
 
-
-
+screen.fill((191, 239, 245))
+all_sprites.draw(screen)
+Button.draw(screen)
 # 遊戲執行迴圈
 running = True
 while running:
@@ -93,6 +93,9 @@ while running:
                 text = font.render('game start!!!', True, BLACK)
                 text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
                 screen.blit(text, text_rect)
+                text = font.render('', True, BLACK)
+                text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
+                screen.blit(text, text_rect)
                 pygame.display.flip()
         elif event.type == pygame.MOUSEBUTTONUP:
             Button.color = GRAY
@@ -102,9 +105,8 @@ while running:
     #更新遊戲
     all_sprites.update()
     #畫面顯示
-    screen.fill((191, 239, 245))
-    all_sprites.draw(screen)
-    Button.draw(screen)
+    
+    
     pygame.display.update()
 
 pygame.quit()
