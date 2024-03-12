@@ -8,7 +8,6 @@ pygame.display.set_caption('Hello World!')
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 BLACK = (0,0,0)
-
 fontObj = pygame.font.Font('freesansbold.ttf', 32) #創字體的物件
 textSurfaceObj = fontObj.render('game start!', True, GREEN,BLACK) #創文字Surface
 textRectObj = textSurfaceObj.get_rect() #文字方塊

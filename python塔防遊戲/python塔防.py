@@ -4,6 +4,7 @@ import pygame
 import os
 import pyautogui
 import sys
+import time
 
 
 # 遊戲基本變數設定
@@ -16,6 +17,7 @@ HEIGHT = 700
 GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
+show_start = True
 #字體
 font = pygame.font.SysFont(None, 40)
 
@@ -31,6 +33,14 @@ backimage = pygame.image.load(os.path.join('遊戲素材', '冰川邊景有雪�
 startb = pygame.image.load(os.path.join('遊戲素材', '開始按鈕.png')).convert()
 
 #角色初始化和移動程式碼
+class attack(pygame.sprite.Sprite):
+    def first_attack(self):
+        pygame.sprite.Sprite.first_attack(self)
+        self.image = pygame.Surface((50, 40))
+        self.image.fill(GREEN)
+        self.rect = self.imgae.get_rect()
+        self.rect.center = (WIDTH/2, HEIGHT/2)
+
 
 #設定敵方進攻路徑素材
 class Player(pygame.sprite.Sprite):
@@ -79,8 +89,14 @@ all_sprites.add(background())
 screen.fill((191, 239, 245))
 all_sprites.draw(screen)
 Button.draw(screen)
+text = font.render('game start!!!', True, BLACK)
+text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
+
+mob = attack
+screen.blit(mob)
 # 遊戲執行迴圈
 running = True
+
 while running:
     #關掉遊戲視窗
     for event in pygame.event.get():
@@ -90,19 +106,10 @@ while running:
             #如果滑鼠點擊按鈕
             if Button.is_over(pygame.mouse.get_pos()):
                 Button.color = BLACK
-                text = font.render('game start!!!', True, BLACK)
-                text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
-                screen.blit(text, text_rect)
-                text = font.render('', True, BLACK)
-                text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
-                screen.blit(text, text_rect)
                 pygame.display.flip()
         elif event.type == pygame.MOUSEBUTTONUP:
             Button.color = GRAY
 
-    #偵測滑鼠是否碰到並按下按鈕
-    
-    #更新遊戲
     all_sprites.update()
     #畫面顯示
     
