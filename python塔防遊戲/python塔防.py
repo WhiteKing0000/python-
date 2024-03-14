@@ -32,14 +32,20 @@ road_img = pygame.image.load(os.path.join('遊戲素材', 'road.png')).convert()
 backimage = pygame.image.load(os.path.join('遊戲素材', '冰川邊景有雪板.png')).convert()
 startb = pygame.image.load(os.path.join('遊戲素材', '開始按鈕.png')).convert()
 
-#角色初始化和移動程式碼
+
 class attack(pygame.sprite.Sprite):
-    def first_attack(self):
-        pygame.sprite.Sprite.first_attack(self)
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((50, 40))
         self.image.fill(GREEN)
-        self.rect = self.imgae.get_rect()
+        self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
+
+    def update(self):
+        key_pressed = pygame.key.get_pressed()
+        self.rect.x += 2
+        if self.rect.right > WIDTH:
+            self.rect.x = 0
 
 
 #設定敵方進攻路徑素材
@@ -84,7 +90,7 @@ Button = button(800, 0, 200, 100, GRAY, 'press me')
 #Player()
 all_sprites.add(Player())
 all_sprites.add(background())
-
+all_sprites.add(attack())
 
 screen.fill((191, 239, 245))
 all_sprites.draw(screen)
@@ -92,8 +98,6 @@ Button.draw(screen)
 text = font.render('game start!!!', True, BLACK)
 text_rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
 
-mob = attack
-screen.blit(mob)
 # 遊戲執行迴圈
 running = True
 
@@ -115,5 +119,4 @@ while running:
     
     
     pygame.display.update()
-
 pygame.quit()
