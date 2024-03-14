@@ -31,21 +31,32 @@ pygame.display.set_caption('地球暖化塔防遊戲')
 road_img = pygame.image.load(os.path.join('遊戲素材', 'road.png')).convert()
 backimage = pygame.image.load(os.path.join('遊戲素材', '冰川邊景有雪板.png')).convert()
 startb = pygame.image.load(os.path.join('遊戲素材', '開始按鈕.png')).convert()
+trash_can = pygame.image.load(os.path.join('遊戲素材', '垃圾桶怪物.png')).convert()
 
 
 class attack(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 40))
-        self.image.fill(GREEN)
+        self.image = pygame.transform.scale(trash_can, (120, 100))
+        #self.image.fill(GREEN)
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH/2, HEIGHT/2)
+        self.rect.center = (100, 0)
+        
+
+        
 
     def update(self):
         key_pressed = pygame.key.get_pressed()
-        self.rect.x += 2
-        if self.rect.right > WIDTH:
-            self.rect.x = 0
+        if self.rect.y != 200:
+            self.rect.y += 1
+        elif self.rect.x != 530:
+            self.rect.x += 1
+        elif self.rect.y != 650:
+            self.rect.y += 1
+                
+          
+            
 
 
 #設定敵方進攻路徑素材
@@ -87,10 +98,11 @@ class button(pygame.sprite.Sprite):
 all_sprites = pygame.sprite.Group()
 #建立按鈕
 Button = button(800, 0, 200, 100, GRAY, 'press me')
+first_attack = attack(100, 50)
 #Player()
 all_sprites.add(Player())
 all_sprites.add(background())
-all_sprites.add(attack())
+all_sprites.add(first_attack)
 
 screen.fill((191, 239, 245))
 all_sprites.draw(screen)
@@ -114,9 +126,11 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP:
             Button.color = GRAY
 
+    
     all_sprites.update()
+    all_sprites.draw(screen)
     #畫面顯示
-    
-    
-    pygame.display.update()
+
+    #刷新螢幕
+    pygame.display.update()    
 pygame.quit()
